@@ -1,15 +1,45 @@
+local vector2 = require("Math2D/vector2")
+
 local map = {}
+map.__index = map
 
-map_conf = {
-    x = 40,
-    y = 40,
-    width = 720,
-    height = 520
-}
+-- constructor
+function map:new(coordinate, size)
+    local m = setmetatable({}, map)
+    m.root = coordinate
+    m.size = size
+    m.color = {
+        r = 0,
+        g = 0,
+        b = 0
+    }
+    m.border_color = {
+        r = 1,
+        g = 1,
+        b = 1
+    }
+    return m
+end
 
-function map.create()
-    love.graphics.setColor(1, 1, 1)
-    love.graphics.rectangle("line", map_conf.x, map_conf.y, map_conf.width, map_conf.height)
+function map:draw()
+    love.graphics.setColor(self.border_color.r, self.border_color.g, self.border_color.b)
+    love.graphics.rectangle("line", self.root.x, self.root.y, self.size.x, self.size.y)
+end
+
+function map:is_in_map(coordinate, size)
+    if coordinate.x < self.root.x then
+        return false
+    end
+    if coordinate.x + size.x > self.root.x + self.size.x then
+        return false
+    end
+    if coordinate.y < self.root.y then
+        return false
+    end
+    if coordinate.y + size.y > self.root.y + self.size.y then
+        return false
+    end
+    return true
 end
 
 return map
