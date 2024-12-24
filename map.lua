@@ -1,4 +1,4 @@
-local vector2 = require("Math2D/vector2")
+require("Math2D/vector2")
 
 local map = {}
 map.__index = map
