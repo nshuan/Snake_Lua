@@ -1,12 +1,12 @@
-require("Math2D/vector2")
+require("Engine/vector2")
 
 local snake_node = {}
 snake_node.__index = snake_node
 
-function snake_node:new(coordinate, size, head, tail)
+function snake_node:new(coordinate, radius, head, tail)
     local v = setmetatable({}, snake_node)
     v.coordinate = coordinate
-    v.size = size
+    v.radius = radius
     v.head = head
     v.tail = tail
     v.is_root = false
@@ -34,10 +34,10 @@ end
 function snake_node:draw()
     if self.is_root then
         love.graphics.setColor(1, 0, 0)
-        love.graphics.ellipse("fill", self.coordinate.x, self.coordinate.y, self.size.x / 2 * 1.1, self.size.y / 2 * 1.1, 100)     
+        love.graphics.circle("fill", self.coordinate.x, self.coordinate.y, self.radius * 1.1, 100)     
     else
         love.graphics.setColor(1, 1, 0)
-        love.graphics.ellipse("fill", self.coordinate.x, self.coordinate.y, self.size.x / 2, self.size.y / 2, 100) 
+        love.graphics.circle("fill", self.coordinate.x, self.coordinate.y, self.radius, 100) 
     end
 
     if self.tail == nil then
@@ -50,10 +50,10 @@ end
 function snake_node:draw_single()
     if self.is_root then
         love.graphics.setColor(1, 0, 0)
-        love.graphics.ellipse("fill", self.coordinate.x, self.coordinate.y, self.size.x / 2 * 1.1, self.size.y / 2 * 1.1, 100)     
+        love.graphics.circle("fill", self.coordinate.x, self.coordinate.y, self.radius * 1.1, 100)     
     else
         love.graphics.setColor(1, 1, 0)
-        love.graphics.ellipse("fill", self.coordinate.x, self.coordinate.y, self.size.x / 2, self.size.y / 2, 100) 
+        love.graphics.circle("fill", self.coordinate.x, self.coordinate.y, self.radius, 100) 
     end
 end
 

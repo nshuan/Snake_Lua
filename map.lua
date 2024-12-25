@@ -1,4 +1,4 @@
-require("Math2D/vector2")
+require("Engine/vector2")
 
 local map = {}
 map.__index = map
@@ -26,17 +26,17 @@ function map:draw()
     love.graphics.rectangle("line", self.root.x, self.root.y, self.size.x, self.size.y)
 end
 
-function map:is_in_map(coordinate, size)
+function map:is_in_map(coordinate, radius)
     if coordinate.x < self.root.x then
         return false
     end
-    if coordinate.x + size.x > self.root.x + self.size.x then
+    if coordinate.x + radius > self.root.x + self.size.x then
         return false
     end
     if coordinate.y < self.root.y then
         return false
     end
-    if coordinate.y + size.y > self.root.y + self.size.y then
+    if coordinate.y + radius > self.root.y + self.size.y then
         return false
     end
     return true

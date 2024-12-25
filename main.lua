@@ -1,6 +1,7 @@
 local Map = require("map")
 local Snake = require("snake")
-local Vector2 = require("Math2D/vector2")
+local Spawner = require("spawner")
+local Vector2 = require("Engine/vector2")
 require("globals")
 
 local start = false
@@ -18,12 +19,15 @@ map_conf = {
         r = 1,
         g = 1,
         b = 1
-    }
+    },
+    snake_radius = 10,
+    bait_radius = 5
 }
 
 function love.load()
     map = Map:new(map_conf.root_coord, map_conf.size)
-    snake = Snake:new(map_conf.root_coord:add(Vector2:new(50, 50)), Vector2:new(20, 20), 100)
+    spawner = Spawner:new(map_conf.root_coord, map_conf.size, map_conf.bait_radius)
+    snake = Snake:new(map_conf.root_coord:add(Vector2:new(50, 50)), map_conf.snake_radius, 10)
     snake:set_speed(100)
 end
 
@@ -33,10 +37,14 @@ function love.update(dt)
     end
 
     snake:move(map, snake_direction, dt)
+    if snake:check_eat(spawner.current_bait_pos, map_conf.bait_radius) then
+        spawner:spawn()
+    end
 end
 
 function love.draw()
     map:draw()
+    spawner:draw()
     snake:draw()
 end
 
