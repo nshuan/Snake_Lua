@@ -27,7 +27,7 @@ map_conf = {
 function love.load()
     map = Map:new(map_conf.root_coord, map_conf.size)
     spawner = Spawner:new(map_conf.root_coord, map_conf.size, map_conf.bait_radius)
-    snake = Snake:new(map_conf.root_coord:add(Vector2:new(50, 50)), map_conf.snake_radius, 10)
+    snake = Snake:new(map_conf.root_coord:add(Vector2:new(50, 50)), map_conf.snake_radius, 5)
     snake:set_speed(100)
 end
 
@@ -46,6 +46,8 @@ function love.draw()
     map:draw()
     spawner:draw()
     snake:draw()
+    map:draw_mask()
+    map:draw_outline()
 end
 
 function love.keypressed(key)

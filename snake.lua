@@ -26,6 +26,8 @@ function snake:new(coordinate, radius, length)
         current_length = current_length + 1
     end
 
+    v.tail = current_node
+
     return v
 end
 
@@ -38,10 +40,15 @@ function snake:check_eat(bait_position, bait_radius)
         return false
     end
 
+    self:grow()
     return true
 end
 
 function snake:move(map, direction, dt)
+    if self.direction == nil then
+        self.direction = direction
+    end
+
     local new_pos = self.root.coordinate:add(direction:normalize():mul(self.speed * dt))
     if map:is_in_map(new_pos, self.radius) then
         self.root.coordinate = new_pos
@@ -49,6 +56,12 @@ function snake:move(map, direction, dt)
         return true
     end
     return false
+end
+
+function snake:grow()
+    local new_node = snake_node:new(self.tail.coordinate:add(self.tail.direction), self.radius, self.tail, nil)
+    self.tail.tail = new_node
+    self.tail = new_node
 end
 
 function snake:draw()

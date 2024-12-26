@@ -38,6 +38,15 @@ function vector2:normalize()
     return self:mul(1 / mag)
 end
 
+-- compare
+function vector2:equal(compare_with)
+    if compare_with.x == self.x and compare_with.y == self.y then
+        return true
+    end
+
+    return false
+end
+
 -- to string
 function vector2:__toString()
     return "(" .. self.x .. ", " .. self.y .. ")"

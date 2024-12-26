@@ -19,8 +19,8 @@ end
 
 function snake_node:move(tail_distance)
     if self.head ~= nil then
-        local direction = self.coordinate:subtract(self.head.coordinate)
-        local new_coord = direction:mul(1/direction:magnitude()):mul(tail_distance):add(self.head.coordinate)
+        self.direction = self.coordinate:subtract(self.head.coordinate)
+        local new_coord = self.direction:mul(1/self.direction:magnitude()):mul(tail_distance):add(self.head.coordinate)
         self.coordinate = new_coord
     end
         
